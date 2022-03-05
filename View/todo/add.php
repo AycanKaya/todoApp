@@ -38,10 +38,10 @@
                                         <select class="form-control" id="category_id">
                                             <option value="0">Kategori Seçimi Yapınız</option>
 
-                                            <?php  foreach ($data as $category): ?>
+                                            <?php foreach ($data as $category): ?>
 
-                                                <option value="<?= $category['id']?>"> <?= $category['title']?> </option>
-                                            <?php  endforeach;?>
+                                                <option value="<?= $category['id'] ?>"> <?= $category['title'] ?> </option>
+                                            <?php endforeach; ?>
                                         </select>
                                     </div>
                                     <div class="form-group">
@@ -54,6 +54,25 @@
                                         <input type="text" class="form-control" id="description" name="description"
                                                placeholder="Ne yapacaksınız ? ">
                                     </div>
+
+
+                                    <div class="form-group">
+                                        <label for="status">Durum</label>
+                                        <select id="status">
+                                            <option value="a">Aktif</option>
+                                            <option value="p">Pasif</option>
+                                            <option value="s">Süreçte</option>
+                                        </select>
+
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="progress">İlerleme</label>
+                                        <input type="range" class="form-control" id="progress" min="0" max="100">
+
+                                    </div>
+
+
                                     <div class="form-group">
                                         <label for="title">Renk Seçiniz</label>
                                         <input type="color" class="form-control" id="color" value="#007bff"
@@ -108,6 +127,13 @@
 <script>
 
     const todo = document.getElementById('todo');
+
+    let progress = document.getElementById('progress');
+
+    progress.addEventListener('change', (e) => {
+        console.log(progress.value);
+    })
+
     todo.addEventListener('submit', (e) => {
         e.preventDefault();
 
@@ -119,24 +145,28 @@
         let end_date = document.getElementById('end_date').value;
         let end_date_time = document.getElementById('end_date_time').value;
         let start_date_time = document.getElementById('start_date_time').value;
+        let progress = document.getElementById('progress').value;
+        let status = document.getElementById('status').value;
 
 
         let formData = new FormData();
-        formData.append('title',title);
-        formData.append('description',description);
-        formData.append('category_id',category_id);
-        formData.append('color',color);
-        formData.append('start_date',start_date);
-        formData.append('end_date',end_date);
-        formData.append('end_date_time',end_date_time);
-        formData.append('start_date_time',start_date_time);
-        console.log(axios)
-        axios.post('<?= url('api/addtodo')?>',formData).then(res=>{
+        formData.append('title', title);
+        formData.append('description', description);
+        formData.append('category_id', category_id);
+        formData.append('color', color);
+        formData.append('start_date', start_date);
+        formData.append('end_date', end_date);
+        formData.append('end_date_time', end_date_time);
+        formData.append('start_date_time', start_date_time);
+        formData.append('progress', progress);
+        formData.append('status', status);
+
+        axios.post('<?= url('api/addtodo')?>', formData).then(res => {
 
             //if response.data.redirect
-            if(res.data.redirect){
-                window.location.href=res.data.redirect;
-            }else {
+            if (res.data.redirect) {
+                window.location.href = res.data.redirect;
+            } else {
                 Swal.fire(
                     res.data.title,
                     res.data.msg,
@@ -144,8 +174,8 @@
                 );
             }
             console.log(res)
-        }).catch(err=>console.log(err));
-     })
+        }).catch(err => console.log(err));
+    })
 
 </script>
 </body>

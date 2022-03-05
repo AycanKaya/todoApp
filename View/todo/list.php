@@ -21,10 +21,10 @@
 
                             <div class="card card-primary">
                                 <div class="card-header">
-                                    <h3 class="card-title">KATEGORİLER</h3>
+                                    <h3 class="card-title">TODOS</h3>
 
                                     <div class="card-tools">
-                                       <a href="<?= url('categories/add')?>" class="btn btn-sm btn-dark">Ekle</a>
+                                       <a href="<?= url('todo/add')?>" class="btn btn-sm btn-dark">Todo Ekle</a>
                                     </div>
                                 </div>
                                 <!-- /.card-header -->
@@ -37,31 +37,45 @@
                                     <table class="table">
                                         <thead>
                                         <tr>
-                                            <th style="width: 10px">#</th>
+
                                             <th>Başlık</th>
-                                            <th>Oluşturma Tarihi</th>
-                                            <th>Güncelleme Tarihi</th>
+                                            <th>Kategori</th>
+                                            <th>Başlangıç</th>
+                                            <th>Bitiş</th>
+                                            <th>İlerleme</th>
+                                            <th>İşlem</th>
                                             <th style="width: 40px">İşlem</th>
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <?php $count=1; foreach ($data as $key => $value): ?>
+                                        <?php foreach ($data as $key => $value): ?>
                                         <tr>
-                                            <td><?=$count++.'.'; ?></td>
+
                                             <td><?= $value['title']?></td>
+                                            <td><?= $value['category_title']?></td>
                                             <td>
                                                <?= $value['created_date']?>
                                             </td>
                                             <td>
-                                                <?= $value['updated_date']?>
+                                                <?= $value['end_date']?>
                                             </td>
                                             <td>
+                                                <?= $value['progress']?>%
+                                                <div class="progress progress-xs">
+                                                    <div class="progress-bar progress-bar-danger" style="width: 55%"></div>
+
+                                                </div>
+                                            </td>
+                                            <td><span class="badge bg-<?= status($value['status'])['color'];?>"><?= status($value['status'])['title']?></span></td>
+
+
+                                            <td>
                                                 <div class="btn-group btn-group-sm">
-                                                    <a class="btn btn-sm btn-danger" href="<?= url('categories/remove/'.$value['id'])?>">
+                                                    <a class="btn btn-sm btn-danger" href="<?= url('todo/remove/'.$value['id'])?>">
                                                         Sil
                                                     </a>
 
-                                                    <a class="btn btn-sm btn-warning" href="<?= url('categories/edit/'.$value['id'])?>">
+                                                    <a class="btn btn-sm btn-warning" href="<?= url('todo/edit/'.$value['id'])?>">
                                                         Güncelle
                                                     </a>
 

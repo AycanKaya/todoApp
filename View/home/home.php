@@ -1,4 +1,4 @@
-<?php  view('static/header');  ?>
+<?php view('static/header'); ?>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
 
@@ -6,108 +6,78 @@
 
         <ul class="navbar-nav ml-auto">
             <li class="nav-item d-none d-sm-inline-block">
-                <a href="<?= URL.'cikis';?>" class="nav-link">Çıkış Yap</a>
+                <a href="<?= URL . 'cikis'; ?>" class="nav-link">Çıkış Yap</a>
             </li>
-
 
 
         </ul>
     </nav>
 
-    <?php view('static/sidebar')?>
+    <?php view('static/sidebar') ?>
 
-    <div class="content-wrapper p-5">
-        <!-- Main content -->
+    <div class="content-wrapper p-2">
         <div class="content">
             <div class="container-fluid">
+                <h5 class="mt-4 mb-2">Güncel Durumunuz <code><?= date('Y-m-d')?></code></h5>
                 <div class="row">
-                    <div class="col-lg-4">
-                        <h3>Yapılacaklar</h3>
-                        <div class="card">
-                            <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
+                   <?php foreach ($data['istatistik'] as $row):?>
 
-                                <p class="card-text">
-                                    Some quick example text to build on the card title and make up the bulk of the card's
-                                    content.
-                                </p>
+                    <div class="col-md-4 col-sm-6 col-12">
+                        <div class="info-box bg-<?= status($row['status'])['color'] ?>">
+                            <span class="info-box-icon"><i class="<?= status($row['status'])['icon'] ?>"></i></span>
 
-                                <a href="#" class="card-link">Card link</a>
-                                <a href="#" class="card-link">Another link</a>
+                            <div class="info-box-content">
+                                <span class="info-box-text"><?= status($row['status'])['title'] ?></span>
+                                <span class="info-box-number"><?=$row['toplam']?></span>
+
+                                <div class="progress">
+                                    <div class="progress-bar" style="width: 70%"></div>
+                                </div>
+                                <span class="progress-description">
+                  <?=number_format($row['yuzde'],2)?>
+                </span>
+                            </div>
+                            <!-- /.info-box-content -->
+                        </div>
+                        <!-- /.info-box -->
+                    </div>
+
+                    <?php endforeach;?>
+                </div>
+                <div>
+                    <div class="col-md-12">
+                        <!-- The time line -->
+                        <div class="timeline">
+                            <!-- timeline time label -->
+
+                            <?php foreach ($data['surec'] as $todo ): ?>
+                            <div class="time-label">
+                                <span class="bg-red"><?= date('d/m/Y',strtotime($todo['start_date'])) ?></span>
+                            </div>
+                            <!-- /.timeline-label -->
+                            <!-- timeline item -->
+                            <div>
+                                <i class="fas fa-check" style="background: <?=$todo['color']?>"></i>
+                                <div class="timeline-item">
+                                    <span class="time"><i class="fas fa-clock"></i> <?= date('H:i',strtotime($todo['start_date'])) ?></span>
+                                    <h3 class="timeline-header"> <span class="badge bg-success"><?= $todo['category_title'] ?></span> <?= $todo['title']?></h3>
+
+                                    <div class="timeline-body">
+                                       <?= $todo['description']?>
+                                    </div>
+                                    <div class="timeline-footer">
+                                        <a href="<?= url('todo/edit/'.$todo['id'])?>" class="btn btn-primary btn-sm">Git</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <?php endforeach; ?>
+                            <div>
+                                <i class="fas fa-clock bg-gray"></i>
                             </div>
                         </div>
-
-                        <div class="card card-primary card-outline">
-                            <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
-
-                                <p class="card-text">
-                                    Some quick example text to build on the card title and make up the bulk of the card's
-                                    content.
-                                </p>
-                                <a href="#" class="card-link">Card link</a>
-                                <a href="#" class="card-link">Another link</a>
-                            </div>
-                        </div><!-- /.card -->
                     </div>
-                    <div class="col-lg-4">
-                        <h3>Devam Edenler</h3>
-                        <div class="card">
-                            <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
+                </div>
 
-                                <p class="card-text">
-                                    Some quick example text to build on the card title and make up the bulk of the card's
-                                    content.
-                                </p>
-
-                                <a href="#" class="card-link">Card link</a>
-                                <a href="#" class="card-link">Another link</a>
-                            </div>
-                        </div>
-
-                        <div class="card card-primary card-outline">
-                            <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
-
-                                <p class="card-text">
-                                    Some quick example text to build on the card title and make up the bulk of the card's
-                                    content.
-                                </p>
-                                <a href="#" class="card-link">Card link</a>
-                                <a href="#" class="card-link">Another link</a>
-                            </div>
-                        </div><!-- /.card -->
-                    </div>
-                    <div class="col-lg-4">
-                        <h3>Bitenler</h3>
-                        <div class="card">
-                            <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
-
-                                <p class="card-text">
-                                    Some quick example text to build on the card title and make up the bulk of the card's
-                                    content.
-                                </p>
-
-                                <a href="#" class="card-link">Card link</a>
-                                <a href="#" class="card-link">Another link</a>
-                            </div>
-                        </div>
-
-                        <div class="card card-primary card-outline">
-                            <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
-
-                                <p class="card-text">
-                                    Some quick example text to build on the card title and make up the bulk of the card's
-                                    content.
-                                </p>
-                                <a href="#" class="card-link">Card link</a>
-                                <a href="#" class="card-link">Another link</a>
-                            </div>
-                        </div><!-- /.card -->
-                    </div>
 
                 </div>
 
@@ -116,23 +86,16 @@
 
     </div>
 
-    <aside class="control-sidebar control-sidebar-dark">
-
-        <div class="p-3">
-            <h5>Title</h5>
-            <p>Sidebar content</p>
-        </div>
-    </aside>
 
     <?php view('static/footer') ?>
 
 </div>
 
-<script src="<?= asset('plugins/jquery/jquery.min.js');?>"></script>
+<script src="<?= asset('plugins/jquery/jquery.min.js'); ?>"></script>
 
-<script src="<?=asset('plugins/bootstrap/js/bootstrap.bundle.min.js');?>"></script>
+<script src="<?= asset('plugins/bootstrap/js/bootstrap.bundle.min.js'); ?>"></script>
 
-<script src="<?=asset('js/adminlte.min.js');?>"></script>
+<script src="<?= asset('js/adminlte.min.js'); ?>"></script>
 </body>
 </html>
 ;

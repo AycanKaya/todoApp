@@ -1,9 +1,13 @@
 <?php
 
-if(route(0)=='home'){
+if(route(0)=='home' && !route(1)){
 
-    view('home/home',[
-        'isim'=>'Aycan',
-        'soyisim'=>'Kaya'
-    ]);
+    $return = model('home',[],'list');
+    view('home/home',$return['data']);
+
+}else if(route(0)=='home' && route(1)=='calendar'){
+
+
+    view('home/calendar');
+
 }
